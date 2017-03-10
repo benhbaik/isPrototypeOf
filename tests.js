@@ -46,6 +46,7 @@ tests({
     'It should work for any number of prototype links': function() {
         var result = isPrototypeOf(canine, dog);
         var resultTwo = isPrototypeOf(dog, myDog);
+        
         eq(result, true);
         eq(resultTwo, true);
     }
