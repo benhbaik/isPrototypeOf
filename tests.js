@@ -20,12 +20,21 @@ james2.favTeam = 'clemson tigers';
 
 var james3 = Object.create(james2);
 james3.favColor = 'orange';
-
 var randomObject = {};
 var a = {};
 
+function Person(first, last, age) {
+  this.first = first;
+  this.last = last;
+  this.age = age;
+}
+
+var Gordon = { first: "gordon", last: "zhu", age: 21 };
+
+var Kenny = new Person("kenny", "lee", 21);
+
 tests({
-    // '--- tiff\'s tests ---'
+    // '--------------------- tiff's tests ---------------------'
     'it should return `true` if prototypeObj is a prototype of callingObj': function() {
         eq(isPrototypeOf(dog, myDog), true);
         eq(isPrototypeOf(Object.prototype, myDog), true);
@@ -40,7 +49,7 @@ tests({
             eq(e instanceof TypeError, true);
         }
     },
-    // '--- ivo\'s tests ---'
+    // '--------------------- ivo's tests ---------------------'
     'It should return true if the object in the first argument has the object in the second argument as its prototype.': function () {
         eq(isPrototypeOf(dog, myDog), true);
     },
@@ -64,7 +73,7 @@ tests({
         }
         eq(errorWasThrown, true);
     },
-    // '--- monofysics\' tests ---'
+    // '--------------------- monofysics' tests ---------------------'
     'Should return true if `prototypeObject` is a direct prototype of `targetObject`.' : function () {
         var b = Object.create(a);
         eq(isPrototypeOf(a, b), true);
@@ -107,7 +116,7 @@ tests({
     'Should return false if `targetObject` is not an object.' : function () {
         eq(isPrototypeOf(a, 'string'), false);
     },
-    // '--- james\' tests ---'
+    // '--------------------- james' tests ---------------------'
     'james object should be linked to Object.prototype': function() {
         var testOne = isPrototypeOf(Object.prototype, james);
         eq(testOne, true);
@@ -124,7 +133,7 @@ tests({
         var testFour = isPrototypeOf(Object.prototype, empty);
         eq(testFour === false, true);
     },
-    // '--- nate\'s tests ---'
+    // '--------------------- nate's tests ---------------------'
     'It should return true if prototypeObj is the prototype of object.': function() {
         var skater = {
             kickflip: function() {
@@ -192,7 +201,96 @@ tests({
         }
         eq(thrownError2, true);
     },
-    // '--- Ben's tests ---'
+    // '--------------------- Kenny's tests ---------------------'
+    'It should return an error when a prototype is not included in the argument.': function() {
+        var object1 = {};
+        var object2 = {};
+        var result;
+        try {
+            isPrototypeOf(null, object2);
+        } catch(e) {
+            result = (e instanceof TypeError);
+        }
+
+        eq(result, true);
+    },
+    'It should return an error when prototype is \'undefined\'.': function() {
+        var object1 = {};
+        var object2 = {};
+        var result;
+        try {
+            isPrototypeOf(undefined, object2);
+        } catch(e) {
+            result = (e instanceof TypeError);
+        }
+
+        eq(result, true);
+    },
+    'It should return true when object is in another object\'s prototype chain.': function() {
+        eq(isPrototypeOf(Person.prototype, Kenny), true);
+    },
+    'It should return false when object is NOT in another object\'s prototype chain.': function() {
+        eq(isPrototypeOf(Person.prototype, Gordon), false);
+    },
+
+    'It should return true since \'Object\' is a prototype of \'Array\'': function() {
+        eq(isPrototypeOf(Object.prototype, Array.prototype), true);
+    },
+    'It should return false since \'Array\' is a prototype of \'Object\'': function() {
+        eq(isPrototypeOf(Array.prototype, Object.prototype), false);
+    },
+    'It should also return true if the prototype chain is indirect.': function () {
+        var myDog = {};
+        eq(isPrototypeOf(Object.prototype, Kenny), true);
+    },
+
+    // '--------------------- hanihsdd's tests ---------------------'
+    'It should take in two parameters, compare them, and return a boolean': function() {
+    	var obj = {};
+    	var obj2 = {};
+    	eq(isPrototypeOf(obj, obj2), Boolean());
+    },
+    'It should get the prototype of obj and compare with protoObj': function() {
+    	var cat = {
+    		scratch: function() {
+    			console.log('Scratch!!!');
+    		}
+    	};
+    	var myCat = Object.create(cat);
+    	eq(isPrototypeOf(cat, myCat), true);
+    	eq(isPrototypeOf(dog, myCat), false);
+    },
+    'It should compare protoObj through the entire prototype chain of obj': function() {
+  		function Foo() {}
+  		function Bar() {}
+  		function Baz() {}
+  		Bar.prototype = Object.create(Foo.prototype);
+  		Baz.prototype = Object.create(Bar.prototype);
+  		var baz = new Baz();
+  		console.log(baz);
+  		eq(isPrototypeOf(Baz.prototype, baz), true);
+  		eq(isPrototypeOf(Bar.prototype, baz), true);
+    },
+    'It should accept Object.prototype as protoObj and return true': function() {
+    	var cat = {
+    		scratch: function() {
+    			console.log('Scratch!!!');
+    		}
+    	};
+    	var myCat = Object.create(cat);
+
+    	eq(isPrototypeOf(Object.prototype, myCat), true);
+    },
+    'It should throw a TypeError if protoObj is undefined or null': function() {
+    	var obj = {};
+    	try {
+    		isPrototypeOf(undefined, obj);
+    	} catch(e) {
+    		isTypeError = (e instanceof TypeError);
+    	}
+    	eq(isTypeError, true);
+    },
+    // '--------------------- Ben's tests ---------------------'
     'It should return true if object exists in prototypeObject.': function() {
         var result = isPrototypeOf(dog, myDog);
         eq(result, true);
