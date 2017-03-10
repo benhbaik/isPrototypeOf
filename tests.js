@@ -50,9 +50,6 @@ tests({
     'It should also return true if the prototype chain is indirect.': function () {
         eq(isPrototypeOf(Object.prototype, myDog), true);
     },
-    'It should be able to compare the built-in String': function () {
-        eq(isPrototypeOf(String.prototype, 'two'), true);
-    },
     'It should be able to compare the built-in Array.': function () {
         eq(isPrototypeOf(Array.prototype, []), true);
     },
