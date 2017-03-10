@@ -1,3 +1,16 @@
+var canine = {
+  bark: function() {
+    console.log('bark');
+  }
+};
+
+var dog = Object.create(canine);
+dog.fetch = function() {
+  console.log('fetch');
+};
+
+var myDog = Object.create(dog);
+
 tests({
     'It should return true if object exists in prototypeObject.': function() {
         var result = isPrototypeOf(dog, myDog);

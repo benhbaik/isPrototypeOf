@@ -1,16 +1,3 @@
-var canine = {
-  bark: function() {
-    console.log('bark');
-  }
-};
-
-var dog = Object.create(canine);
-dog.fetch = function() {
-  console.log('fetch');
-};
-
-var myDog = Object.create(dog);
-
 function isPrototypeOf(prototypeObject, object) {
     if (prototypeObject === undefined || null) {
         throw new TypeError('Cannot read property "isPrototypeOf" of undefined');
