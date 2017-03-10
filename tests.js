@@ -42,5 +42,11 @@ tests({
     'It should work with Object.prototype being passed in as prototypeObject.': function() {
         var result = isPrototypeOf(Object.prototype, dog);
         eq(result, true);
+    },
+    'It should work for any number of prototype links': function() {
+        var result = isPrototypeOf(canine, dog);
+        var resultTwo = isPrototypeOf(dog, myDog);
+        eq(result, true);
+        eq(resultTwo, true);
     }
 });
