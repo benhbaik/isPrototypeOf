@@ -1,18 +1,26 @@
 function isPrototypeOf(prototypeObject, object) {
-    if (prototypeObject === undefined || null) {
+    var protoOfObject;;
+
+    if (typeof prototypeObject === 'undefined' ||  prototypeObject === null) {
         throw new TypeError('Cannot read property "isPrototypeOf" of undefined');
     }
 
-    if (object == undefined || null) {
+    if (typeof object === 'undefined' || object === null) {
         return false;
     }
 
-    if (prototypeObject === Object.prototype) {
+    if (typeof object === ('string' || 'boolean' || 'number')) {
+        return false;
+    }
+
+    protoOfObject = Object.getPrototypeOf(object);
+
+    if (prototypeObject === protoOfObject) {
         return true;
     }
 
-    if (prototypeObject === Object.getPrototypeOf(object)) {
-        return true;
+    if (prototypeObject !== protoOfObject) {
+        return isPrototypeOf(prototypeObject, protoOfObject);
     }
 
     return false;
